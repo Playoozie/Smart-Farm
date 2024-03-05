@@ -97,3 +97,85 @@ void loop()
   delay(1000);
 
 }
+
+
+void Distance_work()
+{
+  distance = distanceSensor.measureDistanceCm();
+  Serial.print("distance ");
+  Serial.print(distance);
+  Serial.println(" cm ");
+  if(distance < 30)
+  {
+    digitalWrite(GREEN_ledPin, LOW);// BLUE
+    
+  }
+  else
+  {
+    digitalWrite(GREEN_ledPin, HIGH);
+    
+  }
+  
+}
+
+void DHT_work(){
+  
+  h = dht.readHumidity();
+  t = dht.readTemperature();
+  uint16_t pre_temp = t;
+  uint16_t pre_humi = h;
+    if((t > 0  ) && (h > 0))
+    {
+      pre_temp = t;
+      pre_humi = h;
+    }
+  if (isnan(h) || isnan(t))
+  {
+    // Serial.println("Failed to read DHT");
+    t = pre_temp;
+    h = pre_humi;
+    // return;
+  }
+  Serial.print("Humidity: ");
+  Serial.print(h);
+  Serial.println(" %/t");
+  Serial.print("Temperature: ");
+  Serial.print(t);
+  Serial.println(" °C");
+}
+
+void Soil_Sensor() {
+  val = analogRead(analogPin);  //อ่านค่าสัญญาณ analog ขา1 ที่ต่อกับ Capacitive Soil Moisture Sensor
+  Serial.print("val = "); // พิมพ์ข้อความส่งเข้าคอมพิวเตอร์ "val = "
+  Serial.print(val); // พิมพ์ค่าของตัวแปร val
+}
+
+
+void Display()
+{
+OLED.clearDisplay();
+OLED.setTextColor(WHITE, BLACK);
+OLED.setTextSize(1.5);
+OLED.setCursor(15, 0);
+OLED.print("TEMP: ");
+OLED.println(t);
+OLED.setCursor(65, 0 );
+OLED.print(" *C");
+OLED.setTextSize(1.5); 
+OLED.setCursor(15, 10);
+OLED.print("HUMI: ");
+OLED.println(h);
+OLED.setCursor(65, 10);
+OLED.print(" %");
+OLED.setTextSize(1.5);
+OLED.setCursor(15, 20);
+OLED.print("val: ");
+OLED.println(val);
+OLED.setCursor(70, 20);
+OLED.print("Dis:");
+OLED.println(distance);
+OLED.setCursor(111, 20);
+OLED.print("cm");
+OLED.setTextColor(BLACK, WHITE);
+OLED.display();  
+}

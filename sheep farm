@@ -1,0 +1,99 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include <DHT.h>
+#include <HCSR04.h>
+
+Adafruit_SSD1306 OLED(4);
+UltraSonicDistanceSensor distanceSensor(9, 10); //  trig, echo
+#define DHTPIN 8 //Pin DHT
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+#define BLUE_ledPin  6
+#define YELLOW_ledPin  2
+#define RED_ledPin  3
+#define GREEN_ledPin  7
+
+int analogPin = 1; //sensor dirt
+int Fan_Relay = 11;
+int Pump_Relay = 12;
+///////
+int x;
+int val = 0;
+float t;
+float h;
+///////
+int distance;
+//////
+
+void setup() 
+{
+  OLED.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  Display();
+  Serial.begin(19200);
+  
+  Serial.println("Smart farm test");
+  pinMode(BLUE_ledPin, OUTPUT); //red
+  pinMode(YELLOW_ledPin, OUTPUT); // red
+  pinMode(RED_ledPin, OUTPUT); // yellow
+  pinMode(GREEN_ledPin, OUTPUT);
+  pinMode(Fan_Relay, OUTPUT);
+  pinMode(Pump_Relay, OUTPUT);
+  dht.begin();
+  
+}
+
+
+
+void loop() 
+{
+  Distance_work();
+  DHT_work();
+  Soil_Sensor();
+  Display();
+  
+  //// Temp work 
+  if(t > 20)
+  {
+    digitalWrite(Fan_Relay, HIGH); 
+    digitalWrite(RED_ledPin, LOW);
+    digitalWrite(BLUE_ledPin, HIGH);
+    
+  }
+  else
+  {
+    digitalWrite(Fan_Relay, LOW);
+    digitalWrite(RED_ledPin, HIGH);
+    digitalWrite(BLUE_ledPin, LOW);
+    
+  }
+
+  
+
+  // Humi Work Pump
+  if(val > 250)
+  {
+    digitalWrite(Pump_Relay, HIGH);
+    digitalWrite(YELLOW_ledPin, LOW);
+  }
+  else
+  {
+    digitalWrite(Pump_Relay, LOW);
+    digitalWrite(YELLOW_ledPin, HIGH);
+  }
+
+  // Ultrasonic Work
+  if(distance < 30)
+  {
+    digitalWrite(GREEN_ledPin, LOW);// BLUE
+    
+  }
+  else
+  {
+    digitalWrite(GREEN_ledPin, HIGH);
+    
+  }
+ 
+  delay(1000);
+
+}

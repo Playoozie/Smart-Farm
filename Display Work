@@ -1,0 +1,28 @@
+void Display()
+{
+OLED.clearDisplay();
+OLED.setTextColor(WHITE, BLACK);
+OLED.setTextSize(1.5);
+OLED.setCursor(15, 0);
+OLED.print("TEMP: ");
+OLED.println(t);
+OLED.setCursor(65, 0 );
+OLED.print(" *C");
+OLED.setTextSize(1.5); 
+OLED.setCursor(15, 10);
+OLED.print("HUMI: ");
+OLED.println(h);
+OLED.setCursor(65, 10);
+OLED.print(" %");
+OLED.setTextSize(1.5);
+OLED.setCursor(15, 20);
+OLED.print("val: ");
+OLED.println(val);
+OLED.setCursor(70, 20);
+OLED.print("Dis:");
+OLED.println(distance);
+OLED.setCursor(111, 20);
+OLED.print("cm");
+OLED.setTextColor(BLACK, WHITE);
+OLED.display();  
+}

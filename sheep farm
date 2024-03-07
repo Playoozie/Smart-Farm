@@ -29,10 +29,10 @@ int distance;
 void setup() 
 {
   OLED.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  Display();
+  Display();  
   Serial.begin(19200);
   
-  Serial.println("Smart farm test");
+  Serial.println("Sheep Smart farm ");
   pinMode(BLUE_ledPin, OUTPUT); //red
   pinMode(YELLOW_ledPin, OUTPUT); // red
   pinMode(RED_ledPin, OUTPUT); // yellow
@@ -53,11 +53,12 @@ void loop()
   Display();
   
   //// Temp work 
-  if(t > 20)
+  if(t > 25)
   {
     digitalWrite(Fan_Relay, HIGH); 
     digitalWrite(RED_ledPin, LOW);
     digitalWrite(BLUE_ledPin, HIGH);
+    Serial.println(" Fan is working! ");
     
   }
   else
@@ -67,4 +68,35 @@ void loop()
     digitalWrite(BLUE_ledPin, LOW);
     
   }
-}
+
+  
+
+  // Humi Work Pump
+  if(val > 300)
+  {
+    digitalWrite(Pump_Relay, HIGH);
+    digitalWrite(YELLOW_ledPin, LOW);
+    Serial.println(" Watering! ");
+    
+  }
+  else
+  {
+    digitalWrite(Pump_Relay, LOW);
+    digitalWrite(YELLOW_ledPin, HIGH);
+    
+  }
+
+  // Ultrasonic Work
+  if( distance < 100){
+    digitalWrite(GREEN_ledPin, LOW);
+    Serial.println(" Something is coming! ");
+    
+  }
+  else {
+    digitalWrite(GREEN_ledPin, HIGH);
+    Serial.println(" Normal ");
+   }
+  
+  delay(10000);
+
+  }

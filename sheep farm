@@ -33,9 +33,9 @@ void setup()
   Serial.begin(19200);
   
   Serial.println("Sheep Smart farm ");
-  pinMode(BLUE_ledPin, OUTPUT); //red
-  pinMode(YELLOW_ledPin, OUTPUT); // red
-  pinMode(RED_ledPin, OUTPUT); // yellow
+  pinMode(BLUE_ledPin, OUTPUT); 
+  pinMode(YELLOW_ledPin, OUTPUT); 
+  pinMode(RED_ledPin, OUTPUT); 
   pinMode(GREEN_ledPin, OUTPUT);
   pinMode(Fan_Relay, OUTPUT);
   pinMode(Pump_Relay, OUTPUT);

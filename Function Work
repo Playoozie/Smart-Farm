@@ -4,17 +4,6 @@ void Distance_work()
   Serial.print("distance ");
   Serial.print(distance);
   Serial.println(" cm ");
-  if(distance < 30)
-  {
-    digitalWrite(GREEN_ledPin, LOW);// BLUE
-    
-  }
-  else
-  {
-    digitalWrite(GREEN_ledPin, HIGH);
-    
-  }
-  
 }
 
 
@@ -47,5 +36,5 @@ void DHT_work(){
 void Soil_Sensor() {
   val = analogRead(analogPin);  //อ่านค่าสัญญาณ analog ขา1 ที่ต่อกับ Capacitive Soil Moisture Sensor
   Serial.print("val = "); // พิมพ์ข้อความส่งเข้าคอมพิวเตอร์ "val = "
-  Serial.print(val); // พิมพ์ค่าของตัวแปร val
+  Serial.println(val); // พิมพ์ค่าของตัวแปร val
 }
